@@ -17,7 +17,7 @@ Resources:
           - arn:aws:ec2:us-east-1:045675758538:security-group/sg-01e80cd0676ab5974
         SubnetArn:
           !Sub
-            - arn:aws:ec2:us-east-1:045675758538:subnet/${Subnet1}
+            - 'arn:aws:ec2:us-east-1:045675758538:subnet/${Subnet1}'
             - { Subnet1: !Select [ 0, !Ref pPrivateSubnets ] }
       EfsFilesystemArn: arn:aws:elasticfilesystem:us-east-1:045675758538:file-system/fs-2ca58898
       Tags:
