@@ -1,0 +1,25 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Specifies an EFS location for DataSync'
+
+Parameters:
+  pPrivateSubnets:
+    Description: Parameter containing list of private subnets
+    Type: AWS::SSM::Parameter::Value<List<String>>
+    Default: "/mktxlz/vpc/default/subnet/private/idlist"
+
+Resources:
+  rDataSyncSource1: # DataSync Source 1 (EFS)
+    Type: AWS::DataSync::LocationEFS
+    Properties:
+      Ec2Config:
+        SecurityGroupArns:
+          - arn:aws:ec2:us-east-1:045675758538:security-group/sg-01e80cd0676ab5974
+        SubnetArn:
+          !Sub
+            - arn:aws:ec2:us-east-1:045675758538:subnet/${Subnet1}
+            - { Subnet1: !Select [ 0, !Ref pPrivateSubnets ] }
+      EfsFilesystemArn: arn:aws:elasticfilesystem:us-east-1:045675758538:file-system/fs-2ca58898
+      Tags:
+        - Key: Name
+          Value: "us-east-1a"
